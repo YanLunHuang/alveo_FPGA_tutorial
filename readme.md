@@ -12,3 +12,8 @@ XCL_EMULATION_MODE=sw_emu ./host ./build_dir.sw_emu.xilinx_u50_xdma_201920_1/alv
 XCL_EMULATION_MODE=hw_emu ./host ./build_dir.hw_emu.xilinx_u50_xdma_201920_1/alveo_hls4ml.xclbin  # hardware emulation
 ./host alveo_hls4ml.xclbin  # run on U50
 ```
+## Some detail
+```
+The model contains a zeropad and a conv2d layer.
+Both of them are 8 channel input and output.
+```
