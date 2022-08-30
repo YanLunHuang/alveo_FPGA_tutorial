@@ -1,0 +1,102 @@
+Profile Summary
+Generated on: 2022-08-30 14:24:32
+Msec since Epoch: 1661840672995
+Profiled application: host
+Target platform: 
+Tool version: 2019.2
+XRT build version: 2.3.1301
+Build version branch: 2019.2
+Build version hash: 192e706aea53163a04c574f9b3fe9ed76b6ca471
+Build version date: 2019-10-25 03:04:42
+Target devices: xilinx_u50_xdma_201920_1-0
+Flow mode: System Run
+
+OpenCL API Calls
+API Name,Number Of Calls,Total Time (ms),Minimum Time (ms),Average Time (ms),Maximum Time (ms),
+clCreateProgramWithBinary,1,38.1786,38.1786,38.1786,38.1786,
+clCreateKernel,1,0.892855,0.892855,0.892855,0.892855,
+clFinish,3,0.731568,0.12101,0.243856,0.342169,
+clEnqueueTask,3,0.186794,0.037651,0.0622647,0.096734,
+clEnqueueMigrateMemObjects,6,0.1847,0.019908,0.0307833,0.070413,
+clReleaseMemObject,14,0.106001,0.003797,0.0075715,0.016942,
+clRetainMemObject,12,0.099728,0.003707,0.00831067,0.026972,
+clGetExtensionFunctionAddress,2,0.053642,0.011271,0.026821,0.042371,
+clReleaseKernel,1,0.050355,0.050355,0.050355,0.050355,
+clGetPlatformInfo,14,0.049544,0.003396,0.00353886,0.004108,
+clRetainDevice,4,0.03692,0.003526,0.00923,0.025929,
+clCreateBuffer,2,0.031891,0.007424,0.0159455,0.024467,
+clReleaseDevice,4,0.017844,0.003586,0.004461,0.005982,
+clGetDeviceIDs,2,0.011683,0.003707,0.0058415,0.007976,
+clSetKernelArg,2,0.01072,0.003867,0.00536,0.006853,
+clGetExtensionFunctionAddressForPlatform,2,0.010129,0.003927,0.0050645,0.006202,
+clCreateContext,1,0.009638,0.009638,0.009638,0.009638,
+clGetDeviceInfo,2,0.009318,0.004388,0.004659,0.00493,
+clCreateCommandQueue,1,0.007134,0.007134,0.007134,0.007134,
+clReleaseCommandQueue,1,0.00542,0.00542,0.00542,0.00542,
+clReleaseProgram,1,0.004749,0.004749,0.004749,0.004749,
+clReleaseContext,1,0.004128,0.004128,0.004128,0.004128,
+
+
+Kernel Execution
+Kernel,Number Of Enqueues,Total Time (ms),Minimum Time (ms),Average Time (ms),Maximum Time (ms),
+alveo_hls4ml,3,0.378799,0.084831,0.126266,0.181795,
+
+
+Compute Unit Utilization
+Device,Compute Unit,Kernel,Global Work Size,Local Work Size,Number Of Calls,Dataflow Execution,Max Overlapping Executions,Dataflow Acceleration,Total Time (ms),Minimum Time (ms),Average Time (ms),Maximum Time (ms),Clock Frequency (MHz),
+
+
+Data Transfer: Host to Global Memory
+Context:Number of Devices,Transfer Type,Number Of Buffer Transfers,Transfer Rate (MB/s),Average Bandwidth Utilization (%),Average Buffer Size (KB),Total Time (ms),Average Time (ms),
+context0:1,READ,3,3.107154,0.032366,0.144,0.139034,0.046345,
+context0:1,WRITE,3,2.254533,0.023485,0.144,0.191614,0.063871,
+
+
+Data Transfer: Kernels to Global Memory
+Device,Compute Unit/Port Name,Kernel Arguments,Memory Resources,Transfer Type,Number Of Transfers,Transfer Rate (MB/s),Average Bandwidth Utilization (%),Average Size (KB),Average Latency (ns),
+
+
+Top Data Transfer: Kernels to Global Memory
+Device,Compute Unit,Number of Transfers,Average Bytes per Transfer,Transfer Efficiency (%),Total Data Transfer (MB),Total Write (MB),Total Read (MB),Total Transfer Rate (MB/s),
+
+
+Top Kernel Execution
+Kernel Instance Address,Kernel,Context ID,Command Queue ID,Device,Start Time (ms),Duration (ms),Global Work Size,Local Work Size,
+15187584,alveo_hls4ml,0,0,xilinx_u50_xdma_201920_1-0,75.8553,0.181795,1:1:1,1:1:1,
+15187584,alveo_hls4ml,0,0,xilinx_u50_xdma_201920_1-0,77.6867,0.112173,1:1:1,1:1:1,
+15187584,alveo_hls4ml,0,0,xilinx_u50_xdma_201920_1-0,76.8631,0.084831,1:1:1,1:1:1,
+
+
+Top Memory Writes: Host to Global Memory
+Buffer Address,Context ID,Command Queue ID,Start Time (ms),Duration (ms),Buffer Size (KB),Writing Rate(MB/s),
+0,0,0,75.602,0.074451,0.144,1.934158,
+0,0,0,76.6695,0.071145,0.144,2.024035,
+0,0,0,77.5711,0.046018,0.144,3.129210,
+
+
+Top Memory Reads: Host to Global Memory
+Buffer Address,Context ID,Command Queue ID,Start Time (ms),Duration (ms),Buffer Size (KB),Reading Rate(MB/s),
+4096,0,0,77.0105,0.068169,0.144,2.112397,
+4096,0,0,76.1058,0.039696,0.144,3.627570,
+4096,0,0,77.8268,0.031169,0.144,4.619975,
+
+
+Guidance Parameters
+Parameter,Element,Value,
+DEVICE_EXEC_TIME,xilinx_u50_xdma_201920_1-0,1.943530,
+CU_CALLS,xilinx_u50_xdma_201920_1-0|alveo_hls4ml_1,3,
+MEMORY_BIT_WIDTH,xilinx_u50_xdma_201920_1-0,512,
+MIGRATE_MEM,host,6,
+MEMORY_USAGE,HBM[0],1,
+PLRAM_DEVICE,all,1,
+HBM_DEVICE,all,0,
+KDMA_DEVICE,all,0,
+P2P_DEVICE,all,0,
+P2P_HOST_TRANSFERS,host,0,
+PORT_BIT_WIDTH,alveo_hls4ml_1/m_axi_gmem,32,
+KERNEL_COUNT,alveo_hls4ml,1,
+OBJECTS_RELEASED,all,1,
+TRACE_MEMORY,all,FIFO,
+CU_CONTEXT_EN,all,0,
+
+
