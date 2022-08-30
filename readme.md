@@ -1,6 +1,6 @@
 # hls4ml on Alveo U50 (HLS C/C++ Kernel)
 ## Vitis version 2019.2
-## Activate the tool
+## Activate the tool 
 ```bash
 source /opt/Xilinx/Vitis/2019.2/settings64.sh # Vitis
 source /opt/xilinx/xrt/setup.sh # Vitis XRT
