@@ -10,3 +10,7 @@
 #define DATA_SIZE_OUT  N_FILT_2
 
 typedef ap_fixed<16,14> bigdata_t;
+
+struct input_group{
+    bigdata_t layer[8];
+};

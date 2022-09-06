@@ -40,7 +40,7 @@ Description:
 extern "C" {
 
 void alveo_hls4ml(
-    const bigdata_t *in, // Read-Only Vector
+    const input_group *in, // Read-Only Vector
     bigdata_t *out       // Output Result
     )
 {
@@ -49,10 +49,12 @@ void alveo_hls4ml(
     #pragma HLS INTERFACE s_axilite port=in   bundle=control
     #pragma HLS INTERFACE s_axilite port=out  bundle=control
     #pragma HLS INTERFACE s_axilite port=return bundle=control
-
+    
+    #pragma HLS data_pack variable=in
     #pragma HLS DATAFLOW
 
-    bigdata_t in_bigbuf[DATA_SIZE_IN*IN_STREAM_LEN];
+    bigdata_t in_bigbuf[DATA_SIZE_IN*IN_STREAM_LEN/8][8];
+    #pragma HLS ARRAY_PARTITION variable=in_bigbuf cyclic factor=8 dim=2
     bigdata_t out_bigbuf;
     
     hls::stream<input_t> in_buf;
@@ -65,9 +67,12 @@ void alveo_hls4ml(
     #pragma HLS STREAM   variable=out_buf depth=1
     
     //Get data from DRAM
-    for (int i = 0; i < DATA_SIZE_IN*IN_STREAM_LEN; i++) {
+    for (int i = 0; i < DATA_SIZE_IN*IN_STREAM_LEN/8; i++) {
         #pragma HLS PIPELINE II=1
-        in_bigbuf[i] = in[i];
+        for (int j = 0; j < 8; j++) {
+            #pragma HLS UNROLL
+            in_bigbuf[i][j] = in[i].layer[j];
+        }
     }
     
     //=============================================
@@ -75,10 +80,12 @@ void alveo_hls4ml(
     //=============================================
     
     input_t tmp;
-    for(int i0 = 0; i0 < IN_STREAM_LEN*DATA_SIZE_IN; i0++) { 
-        #pragma HLS PIPELINE II=1
-        tmp = in_bigbuf[i0];
-        in_buf.write(tmp);
+    for(int i = 0; i < IN_STREAM_LEN*DATA_SIZE_IN/8; i++) {
+        for(int j = 0; j < 8; j++) {
+            #pragma HLS PIPELINE II=1
+            tmp = in_bigbuf[i][j];
+            in_buf.write(tmp);
+        }
     }
 
     //=============================================
@@ -93,11 +100,11 @@ void alveo_hls4ml(
     //Output
     //=============================================
 
-    for(int i1 = 0; i1 < DATA_SIZE_OUT*OUT_STREAM_LEN; i1++) {
+    for(int i = 0; i < DATA_SIZE_OUT*OUT_STREAM_LEN; i++) {
         #pragma HLS PIPELINE II=1
         result_t tmp_small = out_buf.read();
         out_bigbuf = tmp_small;
-        out[i1] = out_bigbuf;
+        out[i] = out_bigbuf;
     }
 }
 }

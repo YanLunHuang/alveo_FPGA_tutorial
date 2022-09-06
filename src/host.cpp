@@ -36,6 +36,7 @@ typedef std::chrono::high_resolution_clock Clock;
 #define STRINGIFY2(var) #var
 #define STRINGIFY(var) STRINGIFY2(var)
 
+
 int main(int argc, char** argv)
 {
 
@@ -49,7 +50,7 @@ int main(int argc, char** argv)
     if (argc > 3) datadir = argv[3];
     std::cout << "Will run " << nevents << " time(s), using " << datadir << " to get input features and output predictions (tb_input_features.dat and tb_output_predictions.dat)" << std::endl;
 
-    size_t vector_size_in_bytes = sizeof(bigdata_t) *IN_STREAM_LEN*DATA_SIZE_IN;
+    size_t vector_size_in_bytes = sizeof(input_group) *IN_STREAM_LEN*DATA_SIZE_IN/8;
     size_t vector_size_out_bytes = sizeof(bigdata_t) * OUT_STREAM_LEN*DATA_SIZE_OUT;
     // Allocate Memory in Host Memory
     // When creating a buffer with user pointer (CL_MEM_USE_HOST_PTR), under the hood user ptr 
@@ -57,12 +58,14 @@ int main(int argc, char** argv)
     // its own host side buffer. So it is recommended to use this allocator if user wish to
     // create buffer using CL_MEM_USE_HOST_PTR to align user buffer to page boundary. It will 
     // ensure that user buffer is used when user create Buffer/Mem object with CL_MEM_USE_HOST_PTR 
-    std::vector<bigdata_t,aligned_allocator<bigdata_t>> source_in(IN_STREAM_LEN*DATA_SIZE_IN);
+    std::vector<input_group,aligned_allocator<input_group>> source_in(IN_STREAM_LEN*DATA_SIZE_IN/8);
     std::vector<bigdata_t,aligned_allocator<bigdata_t>> source_hw_results(OUT_STREAM_LEN*DATA_SIZE_OUT);
 
     //Reset the input data
-    for(int i0 = 0; i0 < IN_STREAM_LEN*DATA_SIZE_IN; i0++) { 
-        source_in[i0] = 0;
+    for(int i0 = 0; i0 < IN_STREAM_LEN*DATA_SIZE_IN/8; i0++) {
+        for(int i1 = 0; i1 < 8; i1++) {
+            source_in[i0].layer[i1] = 0;
+        }
     }
 
     //Reset the output result
@@ -190,8 +193,10 @@ int main(int argc, char** argv)
             current=strtok(NULL," ");
         }
         //Send into buffer
-        for(int i0 = 0; i0 < IN_STREAM_LEN*DATA_SIZE_IN; i0++) { 
-            source_in[i0] = (bigdata_t)in[i0];
+        for(int i0 = 0; i0 < IN_STREAM_LEN*DATA_SIZE_IN/8; i0++) {
+            for(int i1 = 0; i1 < 8; i1++) {
+               source_in[i0].layer[i1] = (bigdata_t)in[i0*8+i1];
+            }
         }
         //Reset the output result
         for(int j = 0 ; j < 2 ; j++){
