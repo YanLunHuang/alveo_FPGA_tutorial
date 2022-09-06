@@ -134,6 +134,9 @@ int main(int argc, char** argv)
 
     auto t1 = Clock::now();
     auto t2 = Clock::now();
+    auto t3 = Clock::now();
+    auto t4 = Clock::now();
+    auto t5 = Clock::now();
 
 
 //=====================
@@ -202,18 +205,30 @@ int main(int argc, char** argv)
         t1 = Clock::now();
         // Copy input data to device global memory
         q.enqueueMigrateMemObjects({buffer_in},0/* 0 means from host*/);
+        t2 = Clock::now();
         // Launch the Kernel
         // For HLS kernels global and local size is always (1,1,1). So, it is recommended
         // to always use enqueueTask() for invoking HLS kernel
         q.enqueueTask(krnl_aws_hls4ml);
+        t3 = Clock::now();
         // Copy Result from Device Global Memory to Host Local Memory
         q.enqueueMigrateMemObjects({buffer_output},CL_MIGRATE_MEM_OBJECT_HOST);
+        t4 = Clock::now();
         // Check for any errors from the command queue
         q.finish();
-        t2 = Clock::now();
-        std::cout << "FPGA time: " << std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count() << " ns" << std::endl;
-        fout << "FPGA time: " << std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count() << " ns \n";
-
+        t5 = Clock::now();
+        
+        //print timing
+        std::cout << "FPGA time: " << std::chrono::duration_cast<std::chrono::nanoseconds>(t5 - t1).count() << " ns" << std::endl;
+        fout << "FPGA time: " << std::chrono::duration_cast<std::chrono::nanoseconds>(t5 - t1).count() << " ns \n";
+        std::cout << "Input time: " << std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count() << " ns" << std::endl;
+        fout << "Input time: " << std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count() << " ns \n";
+        std::cout << "Kernel time: " << std::chrono::duration_cast<std::chrono::nanoseconds>(t3 - t2).count() << " ns" << std::endl;
+        fout << "Kernel time: " << std::chrono::duration_cast<std::chrono::nanoseconds>(t3 - t2).count() << " ns \n";
+        std::cout << "Output time: " << std::chrono::duration_cast<std::chrono::nanoseconds>(t4 - t3).count() << " ns" << std::endl;
+        fout << "Output time: " << std::chrono::duration_cast<std::chrono::nanoseconds>(t4 - t3).count() << " ns \n";
+        std::cout << "Stop time: " << std::chrono::duration_cast<std::chrono::nanoseconds>(t5 - t4).count() << " ns" << std::endl;
+        fout << "Stop time: " << std::chrono::duration_cast<std::chrono::nanoseconds>(t5 - t4).count() << " ns \n";
 //=====================
 //Output result
 //=====================

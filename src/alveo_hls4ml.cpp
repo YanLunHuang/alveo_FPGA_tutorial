@@ -44,8 +44,8 @@ void alveo_hls4ml(
     bigdata_t *out       // Output Result
     )
 {
-    #pragma HLS INTERFACE m_axi port=in  offset=slave bundle=gmem
-    #pragma HLS INTERFACE m_axi port=out offset=slave bundle=gmem
+    #pragma HLS INTERFACE m_axi port=in  offset=slave bundle=gmem0
+    #pragma HLS INTERFACE m_axi port=out offset=slave bundle=gmem1
     #pragma HLS INTERFACE s_axilite port=in   bundle=control
     #pragma HLS INTERFACE s_axilite port=out  bundle=control
     #pragma HLS INTERFACE s_axilite port=return bundle=control
@@ -64,9 +64,9 @@ void alveo_hls4ml(
     #pragma HLS STREAM   variable=in_buf  depth=1000
     #pragma HLS STREAM   variable=out_buf depth=1
     
-    //Get data from buffer
+    //Get data from DRAM
     for (int i = 0; i < DATA_SIZE_IN*IN_STREAM_LEN; i++) {
-        #pragma HLS LOOP UNROLL
+        #pragma HLS PIPELINE II=1
         in_bigbuf[i] = in[i];
     }
     
@@ -75,12 +75,10 @@ void alveo_hls4ml(
     //=============================================
     
     input_t tmp;
-    for(int i0 = 0; i0 < IN_STREAM_LEN; i0++) { 
-        for(int i1 = 0; i1 < DATA_SIZE_IN; i1++) { 
-            #pragma HLS UNROLL
-            tmp = in_bigbuf[i0*8+i1];
-            in_buf.write(tmp);
-        }
+    for(int i0 = 0; i0 < IN_STREAM_LEN*DATA_SIZE_IN; i0++) { 
+        #pragma HLS PIPELINE II=1
+        tmp = in_bigbuf[i0];
+        in_buf.write(tmp);
     }
 
     //=============================================
@@ -96,7 +94,7 @@ void alveo_hls4ml(
     //=============================================
 
     for(int i1 = 0; i1 < DATA_SIZE_OUT*OUT_STREAM_LEN; i1++) {
-        #pragma HLS UNROLL
+        #pragma HLS PIPELINE II=1
         result_t tmp_small = out_buf.read();
         out_bigbuf = tmp_small;
         out[i1] = out_bigbuf;
