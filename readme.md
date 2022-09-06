@@ -22,4 +22,6 @@ XCL_EMULATION_MODE=hw_emu ./host ./build_dir.hw_emu.xilinx_u50_xdma_201920_1/alv
 ```bash
 The model contains a zeropad and a conv2d layer.
 Both of them are 8 channel input and output.
+The input and output port connect to different HBM.
+I extend the axi bitwidth so that it can transfer 8 input data each time.
 ```
