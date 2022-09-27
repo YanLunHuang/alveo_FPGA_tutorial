@@ -66,7 +66,7 @@ int main(int argc, char** argv)
     }
 
     //Reset the output result
-    for(int j = 0 ; j < 2 ; j++){
+    for(int j = 0 ; j < OUT_STREAM_LEN*DATA_SIZE_OUT ; j++){
         source_hw_results[j] = 0;
     }
 
@@ -191,7 +191,7 @@ int main(int argc, char** argv)
             source_in[i0] = (bigdata_t)in[i0];
         }
         //Reset the output result
-        for(int j = 0 ; j < 2 ; j++){
+        for(int j = 0 ; j < OUT_STREAM_LEN*DATA_SIZE_OUT ; j++){
             source_hw_results[j] = 0;
         }
 
