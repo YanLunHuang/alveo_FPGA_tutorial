@@ -24,4 +24,5 @@ The model contains a zeropad and a conv2d layer.
 Both of them are 8 channel input and output.
 The input and output port connect to different HBM.
 I extend the axi bitwidth so that it can transfer 8 input data each time.
+In this version, I send ten sets of input one time to test the effect of pipiling.
 ```
