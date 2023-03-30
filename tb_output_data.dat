@@ -1,0 +1,16 @@
+Processing event 0
+FPGA time: 378689 ns 
+Input time: 53051 ns 
+Kernel time: 33213 ns 
+Output time: 5521 ns 
+Stop time: 286904 ns 
+Predictions:  
+1 3 5 7 9 11 13 15 17 19 
+Quantized predictions: 
+Kernel1: 
+1 3 5 7 9 11 13 15 17 19 
+ Kernel2(+1): 
+2 4 6 8 10 12 14 16 18 20 
+ Kernel3(+2): 
+3 5 7 9 11 13 15 17 19 21 
+
