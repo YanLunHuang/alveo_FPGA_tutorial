@@ -20,7 +20,7 @@ XCL_EMULATION_MODE=hw_emu ./host ./build_dir.hw_emu.xilinx_u50_xdma_201920_1/alv
 ```
 ## Some detail
 ```bash
-The model contains a zeropad and a conv2d layer.
-Both of them are 8 channel input and output.
-The input and output port connect to different HBM.
+There are three kernels in the implementation.
+Focus on host.cpp to see how to create several buffers.
+Check conf.ini to see how to launch several CUs.
 ```
