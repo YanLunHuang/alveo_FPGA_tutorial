@@ -22,4 +22,5 @@ XCL_EMULATION_MODE=hw_emu ./host ./build_dir.hw_emu.xilinx_u50_xdma_201920_1/alv
 ```bash
 The model contains a zeropad and a conv2d layer.
 Both of them are 8 channel input and output.
+The weights are sent from host, which can save lots of compilation time when the weight size is very large.
 ```
