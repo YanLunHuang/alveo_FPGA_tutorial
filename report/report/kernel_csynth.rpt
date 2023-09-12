@@ -1,0 +1,230 @@
+
+
+================================================================
+== Vivado HLS Report for 'kernel'
+================================================================
+* Date:           Mon Sep 11 21:15:43 2023
+
+* Version:        2019.2 (Build 2704478 on Wed Nov 06 22:10:23 MST 2019)
+* Project:        alveo_hls4ml
+* Solution:       solution
+* Product family: virtexuplus
+* Target device:  xcu50-fsvh2104-2L-e
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+---------+----------+------------+
+    |  Clock |  Target | Estimated| Uncertainty|
+    +--------+---------+----------+------------+
+    |ap_clk  | 5.00 ns | 5.258 ns |   0.90 ns  |
+    +--------+---------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+----------+-----------+-----+------+----------+
+    |  Latency (cycles) |  Latency (absolute)  |  Interval  | Pipeline |
+    |   min   |   max   |    min   |    max    | min |  max |   Type   |
+    +---------+---------+----------+-----------+-----+------+----------+
+    |      347|     2447| 1.825 us | 12.866 us |  227|  2327| dataflow |
+    +---------+---------+----------+-----------+-----+------+----------+
+
+    + Detail: 
+        * Instance: 
+        +----------------------------------+-------------------------------+---------+---------+----------+-----------+-----+------+----------+
+        |                                  |                               |  Latency (cycles) |  Latency (absolute)  |  Interval  | Pipeline |
+        |             Instance             |             Module            |   min   |   max   |    min   |    max    | min |  max |   Type   |
+        +----------------------------------+-------------------------------+---------+---------+----------+-----------+-----+------+----------+
+        |myproject_U0                      |myproject                      |      268|     2368| 1.409 us | 12.451 us |  227|  2327| dataflow |
+        |kernel_Block_codeRepl1_proc13_U0  |kernel_Block_codeRepl1_proc13  |       79|       79| 0.415 us |  0.415 us |   79|    79|   none   |
+        |kernel_Loop_1_proc71_U0           |kernel_Loop_1_proc71           |       82|       82| 0.431 us |  0.431 us |   82|    82|   none   |
+        |kernel_Block_proc72_U0            |kernel_Block_proc72            |       78|       78| 0.410 us |  0.410 us |   78|    78|   none   |
+        +----------------------------------+-------------------------------+---------+---------+----------+-----------+-----+------+----------+
+
+        * Loop: 
+        N/A
+
+
+
+================================================================
+== Utilization Estimates
+================================================================
+* Summary: 
++---------------------+---------+-------+---------+--------+-----+
+|         Name        | BRAM_18K| DSP48E|    FF   |   LUT  | URAM|
++---------------------+---------+-------+---------+--------+-----+
+|DSP                  |        -|      -|        -|       -|    -|
+|Expression           |        -|      -|        0|      18|    -|
+|FIFO                 |        1|      -|       61|     185|    -|
+|Instance             |        0|      8|     4674|    9964|    -|
+|Memory               |        1|      -|        0|       0|    0|
+|Multiplexer          |        -|      -|        -|      36|    -|
+|Register             |        -|      -|        6|       -|    -|
++---------------------+---------+-------+---------+--------+-----+
+|Total                |        2|      8|     4741|   10203|    0|
++---------------------+---------+-------+---------+--------+-----+
+|Available SLR        |     1344|   2976|   871680|  435840|  320|
++---------------------+---------+-------+---------+--------+-----+
+|Utilization SLR (%)  |    ~0   |   ~0  |    ~0   |       2|    0|
++---------------------+---------+-------+---------+--------+-----+
+|Available            |     2688|   5952|  1743360|  871680|  640|
++---------------------+---------+-------+---------+--------+-----+
+|Utilization (%)      |    ~0   |   ~0  |    ~0   |       1|    0|
++---------------------+---------+-------+---------+--------+-----+
+
++ Detail: 
+    * Instance: 
+    +----------------------------------+-------------------------------+---------+-------+------+------+-----+
+    |             Instance             |             Module            | BRAM_18K| DSP48E|  FF  |  LUT | URAM|
+    +----------------------------------+-------------------------------+---------+-------+------+------+-----+
+    |kernel_Block_codeRepl1_proc13_U0  |kernel_Block_codeRepl1_proc13  |        0|      0|    98|   729|    0|
+    |kernel_Block_proc72_U0            |kernel_Block_proc72            |        0|      0|   159|   409|    0|
+    |kernel_Loop_1_proc71_U0           |kernel_Loop_1_proc71           |        0|      0|    23|   187|    0|
+    |myproject_U0                      |myproject                      |        0|      8|  4394|  8639|    0|
+    +----------------------------------+-------------------------------+---------+-------+------+------+-----+
+    |Total                             |                               |        0|      8|  4674|  9964|    0|
+    +----------------------------------+-------------------------------+---------+-------+------+------+-----+
+
+    * DSP48E: 
+    N/A
+
+    * Memory: 
+    +---------------+--------------------+---------+---+----+-----+------+-----+------+-------------+
+    |     Memory    |       Module       | BRAM_18K| FF| LUT| URAM| Words| Bits| Banks| W*Bits*Banks|
+    +---------------+--------------------+---------+---+----+-----+------+-----+------+-------------+
+    |in_bigbuf_V_U  |kernel_in_bigbuf_V  |        1|  0|   0|    0|    72|   16|     2|         2304|
+    +---------------+--------------------+---------+---+----+-----+------+-----+------+-------------+
+    |Total          |                    |        1|  0|   0|    0|    72|   16|     2|         2304|
+    +---------------+--------------------+---------+---+----+-----+------+-----+------+-------------+
+
+    * FIFO: 
+    +------------------+---------+----+----+-----+------+-----+---------+
+    |       Name       | BRAM_18K| FF | LUT| URAM| Depth| Bits| Size:D*B|
+    +------------------+---------+----+----+-----+------+-----+---------+
+    |in_buf_V_V_U      |        1|  51|   0|    -|  1000|   16|    16000|
+    |out_V_offset_c_U  |        0|   5|   0|    -|     4|   63|      252|
+    |out_buf_V_V_U     |        0|   5|   0|    -|     1|   16|       16|
+    +------------------+---------+----+----+-----+------+-----+---------+
+    |Total             |        1|  61|   0|    0|  1005|   95|    16268|
+    +------------------+---------+----+----+-----+------+-----+---------+
+
+    * Expression: 
+    +---------------------------------------------------+----------+-------+---+----+------------+------------+
+    |                   Variable Name                   | Operation| DSP48E| FF| LUT| Bitwidth P0| Bitwidth P1|
+    +---------------------------------------------------+----------+-------+---+----+------------+------------+
+    |kernel_Block_codeRepl1_proc13_U0_ap_ready_count    |     +    |      0|  0|   3|           2|           1|
+    |myproject_U0_ap_ready_count                        |     +    |      0|  0|   3|           2|           1|
+    |ap_idle                                            |    and   |      0|  0|   2|           1|           1|
+    |ap_sync_ready                                      |    and   |      0|  0|   2|           1|           1|
+    |kernel_Block_codeRepl1_proc13_U0_ap_start          |    and   |      0|  0|   2|           1|           1|
+    |myproject_U0_ap_start                              |    and   |      0|  0|   2|           1|           1|
+    |ap_sync_kernel_Block_codeRepl1_proc13_U0_ap_ready  |    or    |      0|  0|   2|           1|           1|
+    |ap_sync_myproject_U0_ap_ready                      |    or    |      0|  0|   2|           1|           1|
+    +---------------------------------------------------+----------+-------+---+----+------------+------------+
+    |Total                                              |          |      0|  0|  18|          10|           8|
+    +---------------------------------------------------+----------+-------+---+----+------------+------------+
+
+    * Multiplexer: 
+    +-------------------------------------------------------+----+-----------+-----+-----------+
+    |                          Name                         | LUT| Input Size| Bits| Total Bits|
+    +-------------------------------------------------------+----+-----------+-----+-----------+
+    |ap_sync_reg_kernel_Block_codeRepl1_proc13_U0_ap_ready  |   9|          2|    1|          2|
+    |ap_sync_reg_myproject_U0_ap_ready                      |   9|          2|    1|          2|
+    |kernel_Block_codeRepl1_proc13_U0_ap_ready_count        |   9|          2|    2|          4|
+    |myproject_U0_ap_ready_count                            |   9|          2|    2|          4|
+    +-------------------------------------------------------+----+-----------+-----+-----------+
+    |Total                                                  |  36|          8|    6|         12|
+    +-------------------------------------------------------+----+-----------+-----+-----------+
+
+    * Register: 
+    +-------------------------------------------------------+---+----+-----+-----------+
+    |                          Name                         | FF| LUT| Bits| Const Bits|
+    +-------------------------------------------------------+---+----+-----+-----------+
+    |ap_sync_reg_kernel_Block_codeRepl1_proc13_U0_ap_ready  |  1|   0|    1|          0|
+    |ap_sync_reg_myproject_U0_ap_ready                      |  1|   0|    1|          0|
+    |kernel_Block_codeRepl1_proc13_U0_ap_ready_count        |  2|   0|    2|          0|
+    |myproject_U0_ap_ready_count                            |  2|   0|    2|          0|
+    +-------------------------------------------------------+---+----+-----+-----------+
+    |Total                                                  |  6|   0|    6|          0|
+    +-------------------------------------------------------+---+----+-----+-----------+
+
+
+
+================================================================
+== Interface
+================================================================
+* Summary: 
++---------------------+-----+-----+------------+--------------+--------------+
+|      RTL Ports      | Dir | Bits|  Protocol  | Source Object|    C Type    |
++---------------------+-----+-----+------------+--------------+--------------+
+|ap_clk               |  in |    1| ap_ctrl_hs |    kernel    | return value |
+|ap_rst               |  in |    1| ap_ctrl_hs |    kernel    | return value |
+|ap_start             |  in |    1| ap_ctrl_hs |    kernel    | return value |
+|ap_done              | out |    1| ap_ctrl_hs |    kernel    | return value |
+|ap_ready             | out |    1| ap_ctrl_hs |    kernel    | return value |
+|ap_idle              | out |    1| ap_ctrl_hs |    kernel    | return value |
+|ap_continue          |  in |    1| ap_ctrl_hs |    kernel    | return value |
+|m_axi_in_V_AWVALID   | out |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_AWREADY   |  in |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_AWADDR    | out |   64|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_AWID      | out |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_AWLEN     | out |   32|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_AWSIZE    | out |    3|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_AWBURST   | out |    2|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_AWLOCK    | out |    2|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_AWCACHE   | out |    4|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_AWPROT    | out |    3|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_AWQOS     | out |    4|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_AWREGION  | out |    4|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_AWUSER    | out |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_WVALID    | out |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_WREADY    |  in |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_WDATA     | out |   16|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_WSTRB     | out |    2|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_WLAST     | out |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_WID       | out |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_WUSER     | out |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_ARVALID   | out |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_ARREADY   |  in |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_ARADDR    | out |   64|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_ARID      | out |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_ARLEN     | out |   32|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_ARSIZE    | out |    3|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_ARBURST   | out |    2|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_ARLOCK    | out |    2|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_ARCACHE   | out |    4|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_ARPROT    | out |    3|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_ARQOS     | out |    4|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_ARREGION  | out |    4|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_ARUSER    | out |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_RVALID    |  in |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_RREADY    | out |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_RDATA     |  in |   16|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_RLAST     |  in |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_RID       |  in |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_RUSER     |  in |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_RRESP     |  in |    2|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_BVALID    |  in |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_BREADY    | out |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_BRESP     |  in |    2|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_BID       |  in |    1|    m_axi   |     in_V     |    pointer   |
+|m_axi_in_V_BUSER     |  in |    1|    m_axi   |     in_V     |    pointer   |
+|in_V_offset          |  in |   63|   ap_none  |  in_V_offset |    scalar    |
+|in_V_offset_ap_vld   |  in |    1|   ap_none  |  in_V_offset |    scalar    |
+|w2_V_4_address0      | out |    7|  ap_memory |    w2_V_4    |     array    |
+|w2_V_4_ce0           | out |    1|  ap_memory |    w2_V_4    |     array    |
+|w2_V_4_d0            | out |  128|  ap_memory |    w2_V_4    |     array    |
+|w2_V_4_q0            |  in |  128|  ap_memory |    w2_V_4    |     array    |
+|w2_V_4_we0           | out |    1|  ap_memory |    w2_V_4    |     array    |
+|w2_V_4_address1      | out |    7|  ap_memory |    w2_V_4    |     array    |
+|w2_V_4_ce1           | out |    1|  ap_memory |    w2_V_4    |     array    |
+|w2_V_4_d1            | out |  128|  ap_memory |    w2_V_4    |     array    |
+|w2_V_4_q1            |  in |  128|  ap_memory |    w2_V_4    |     array    |
+|w2_V_4_we1           | out |    1|  ap_memory |    w2_V_4    |     array    |
+|out_V_offset         |  in |   63|   ap_none  | out_V_offset |    scalar    |
+|out_V_offset_ap_vld  |  in |    1|   ap_none  | out_V_offset |    scalar    |
++---------------------+-----+-----+------------+--------------+--------------+
+
